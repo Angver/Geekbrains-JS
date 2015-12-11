@@ -1,0 +1,27 @@
+.div-table {
+    display: table;
+    width: auto;
+    border: 1px inset black;
+}
+
+.div-table-row {
+    display: table-row;
+    width: auto;
+    clear: both;
+}
+
+.div-table-col {
+    float: left;
+    display: table-column;
+    width: 100px;
+    height: 100px;
+    border: 1px inset black;
+}
+
+.div-item {
+    background-color: aquamarine;
+}
+
+.target {
+    background-color: black;
+}

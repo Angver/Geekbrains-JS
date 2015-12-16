@@ -23,6 +23,11 @@ var validate = function () {
      */
     this.submitButton_ = this.form_.querySelector('button[type=submit]');
     /**
+     * @type {NodeList}
+     * @private
+     */
+    this.requiredFields_ = this.form_.getElementsByClassName('required');
+    /**
      * @type {string}
      * @private
      */
@@ -49,36 +54,30 @@ validate.prototype.attachEvents_ = function () {
      */
     var that = this;
 
-    this.form_.onsubmit = function() {
+    this.form_.onsubmit = function () {
         return false;
     };
 
-    this.submitButton_.onclick = function() {
+    this.submitButton_.onclick = function () {
         that.onSubmitClick_();
     };
+
+    for (var i = 0; i < this.requiredFields_.length; i++) {
+        var element = this.requiredFields_[i];
+        element.onfocusout = function () {
+            that.onBlurElement_(this);
+        }
+    }
 };
 
-validate.prototype.onSubmitClick_ = function() {
-    var requiredFields = this.form_.getElementsByClassName('required');
+validate.prototype.onSubmitClick_ = function () {
     var formValidatedCorrect = true;
-    for (var i = 0; i < requiredFields.length; i++) {
-        var currentInput = requiredFields[i].getElementsByTagName('input')[0];
-        var validateError = true;
-        switch (currentInput.type) {
-            case 'email':
-            case 'text':
-                validateError = currentInput.value.trim() == '';
-                break;
-            case 'checkbox':
-                validateError = !currentInput.checked;
-                break;
-        }
-        if (validateError) {
-            currentInput.classList.add('error');
-            requiredFields[i].getElementsByClassName('hidden')[0].classList.remove('hidden');
+    for (var i = 0; i < this.requiredFields_.length; i++) {
+        var currentInput = this.requiredFields_[i].getElementsByTagName('input')[0];
+        var isValidateError = this.validateInputElement_(currentInput);
+        if (isValidateError) {
+            this.requiredFields_[i].getElementsByClassName('hidden')[0].classList.remove('hidden');
             formValidatedCorrect = false;
-        } else {
-            currentInput.classList.add('correct');
         }
     }
 
@@ -87,6 +86,41 @@ validate.prototype.onSubmitClick_ = function() {
     }
 };
 
-window.onload = function() {
+/**
+ * @param element {Element}
+ * @private
+ */
+validate.prototype.validateInputElement_ = function (element) {
+    element.classList.remove('error');
+    element.classList.remove('correct');
+
+    var isValidateError = true;
+    switch (element.type) {
+        case 'email':
+        case 'text':
+            isValidateError = element.value.trim() == '';
+            break;
+        case 'checkbox':
+            isValidateError = !element.checked;
+            break;
+    }
+    if (isValidateError) {
+        element.classList.add('error');
+    } else {
+        element.classList.add('correct');
+    }
+
+    return isValidateError;
+};
+
+validate.prototype.onBlurElement_ = function (element) {
+    console.log(element);
+    var isValidateError = this.validateInputElement_(element);
+    if (isValidateError) {
+        element.parentElement().getElementsByTag('span').classList.remove('hidden');
+    }
+};
+
+window.onload = function () {
     new validate();
 };

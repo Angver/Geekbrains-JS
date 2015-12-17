@@ -63,8 +63,8 @@ validate.prototype.attachEvents_ = function () {
     };
 
     for (var i = 0; i < this.requiredFields_.length; i++) {
-        var element = this.requiredFields_[i];
-        element.onfocusout = function () {
+        var element = this.requiredFields_[i].getElementsByTagName('input')[0];
+        element.onblur = function () {
             that.onBlurElement_(this);
         }
     }
@@ -97,6 +97,7 @@ validate.prototype.validateInputElement_ = function (element) {
     var isValidateError = true;
     switch (element.type) {
         case 'email':
+            isValidateError = element.value.search('@') == -1;
         case 'text':
             isValidateError = element.value.trim() == '';
             break;
@@ -114,10 +115,12 @@ validate.prototype.validateInputElement_ = function (element) {
 };
 
 validate.prototype.onBlurElement_ = function (element) {
-    console.log(element);
     var isValidateError = this.validateInputElement_(element);
+    var errorMessageBlock = element.parentElement.getElementsByTagName('span')[0];
     if (isValidateError) {
-        element.parentElement().getElementsByTag('span').classList.remove('hidden');
+        errorMessageBlock.classList.remove('hidden');
+    } else {
+        errorMessageBlock.classList.add('hidden');
     }
 };
 

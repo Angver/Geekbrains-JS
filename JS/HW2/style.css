@@ -1,0 +1,21 @@
+label {
+    width: 190px;
+    display: inline-block;
+}
+
+.required:after {
+        content: '*';
+    color: red;
+}
+
+.hidden {
+    display: none;
+}
+
+.correct {
+    background-color: greenyellow;
+}
+
+.error {
+    background-color: red;
+}

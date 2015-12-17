@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Домашняя работа №2</title>
+    <link type="text/css" href="style.css" rel="stylesheet">
+    <script type="text/javascript" src="script.js"></script>
+</head>
+<body>
+<div class="form">
+    <form id="register_form" name="register_form">
+        <div class="required">
+            <label for="firstName">Имя</label>
+            <input id="firstName" name="firstName">
+            <span class="hidden">Это поле обязательно для заполнения</span>
+        </div>
+        <div class="required">
+            <label for="familyName">Фамилия</label>
+            <input id="familyName" name="familyName">
+            <span class="hidden">Это поле обязательно для заполнения</span>
+        </div>
+        <div class="required">
+            <label for="fatherName">Отчество</label>
+            <input id="fatherName" name="fatherName">
+            <span class="hidden">Это поле обязательно для заполнения</span>
+        </div>
+        <div class="required">
+            <label for="email">Адрес электронной почты</label>
+            <input id="email" type="email" name="email">
+            <span class="hidden">Это поле обязательно для заполнения</span>
+        </div>
+        <div class="required">
+            <label for="agreement">Я согласен с условиями сайта</label>
+            <input id="agreement" type="checkbox" value="1">
+            <span class="hidden">Это поле обязательно для заполнения</span>
+        </div>
+        <button type="submit">Регистрация</button>
+    </form>
+</div>
+</body>
+</html>
